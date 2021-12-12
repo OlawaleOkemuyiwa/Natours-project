@@ -1,0 +1,41 @@
+*, 
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;  //used to force inheritance on all elements as the box-sizing property by itself isnt inherited by default from where it is set(i.e. on the html element)
+} 
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;  //we changed the default browser font-size of 16px(100%) to 10px(62.5%);
+    
+    @include respond(tab-land) {
+        font-size: 56.25%;    //9px
+    }
+
+    @include respond(tab-port) {
+        font-size: 50%;       //8px 
+    }
+
+    @include respond(big-desktop) { //for this to take effect, the min width of browser has to be 1800px so it doesnt bother the other media queries at all(we can put it anywhere in this block)
+        font-size: 75%;       //12px
+    }
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    line-height: 1.7;   //line-height of 1.7 is not same as line 170%. 1.7 value gets inherited by the children of body so the computed value is 1.7 * their various font-sizes. But 170% line height means 170% * body's font size and then this computed value gets inherited by all children regardless of their font size
+    color: $color-grey-dark;
+    padding: 3rem;
+
+    @include respond(tab-port) {
+        padding: 0;
+    }
+}
+
+::selection {  //CCC:to change the color/background color of highlighted text on the page
+    background-color: $color-primary;
+    color: $color-white;
+}

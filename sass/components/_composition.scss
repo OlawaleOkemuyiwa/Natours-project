@@ -1,0 +1,65 @@
+.composition {
+    position: relative;
+    @include clearfix;
+
+    &__photo {  //CCC:img tag is an example of a replaced element(the img element get replaced by an image through src="")and even tho its display is inline, it naturally behaves like an inline-block element that can have width
+        width: 55%; //CCC:always define the dimensions of images in % as much as possible for responsive design
+        box-shadow: 0 1.5rem 4rem rgba($color-black, .4);
+        border-radius: 0.2rem;
+        position: absolute;
+        z-index: 10;  //a base z-index to set other z-indexes on hover etc
+        border: 2px solid $color-white;
+        transition: all .2s;
+        outline-offset: 2rem;  //space between an element and its outline
+
+        @include respond(tab-port) {
+            position: relative;
+            float: left;
+            width: 33.3333333%;
+            box-shadow: 0 1.5rem 3rem rgba($color-black, .2);
+        }
+
+        &:hover {
+            outline: 1.5rem solid $color-primary;
+            transform: scale(1.05) translateY(-.5rem);
+            box-shadow: 0 2.5rem 4rem rgba($color-black, .5);
+            z-index: 20;
+        }
+    
+        &--p1 {
+            top: -2rem;
+            left: 0;
+
+            @include respond(tab-port) {
+                top: 0;
+                transform: scale(1.2);
+            }
+        }
+
+        &--p2 {
+            top: 2rem;
+            right: 0;
+
+            @include respond(tab-port) {
+                top: -1rem;
+                transform: scale(1.3);
+                z-index: 100;
+            }
+        }
+
+        &--p3 {
+            top: 10rem;
+            left: 20%;
+
+            @include respond(tab-port) {
+                top: 1rem;
+                left: 0;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    &:hover &__photo:not(:hover) {  //make the other images aside the one hovered smaller
+        transform: scale(.95);
+    } //.composition:hover .composition__photo:not(:hover) 
+}

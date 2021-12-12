@@ -1,0 +1,98 @@
+//components are building blocks that can be used throughout our webpage
+
+.btn {
+    &,
+    &:link,
+    &:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block;
+        padding: 1.5rem 4rem;
+        border-radius: 10rem;
+        transition: all 0.2s;
+        position: relative;
+        font-size: $default-font-size;
+
+        //Additional styling for the button element(not a default link)
+        border: none;
+        cursor: pointer;
+    }
+
+    &::after {           //the after pseudo element is like the last child of a parent element (i.e. the button) and is designed here to resemble the button to achieve a fading out effect on the button when hovered
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;  //make it apppear under the button
+        transition: all .4s;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 1rem 2rem rgba($color-black, .2);
+
+        &::after {  //when you hover on the btn, do these to the after element
+            transform: scaleX(1.4) scaleY(1.6); 
+            opacity: 0;                         //from initial state of full opacity 1 of the after element to opacity of 0 on hover: a trick for fading out the pseudo element after it is enlarged
+        }
+    }
+
+    &:active,
+    &:focus {  //focus is for submit button
+        outline: none;
+        transform: translateY(-1px);
+        box-shadow: 0 .5rem 1rem rgba($color-black, .2);    //less blur and Y offset to show that the btn is a lil closer downwards than when in hover state
+    }
+
+    &--white {                          //a white version of the button 
+        background-color: $color-white;
+        color: $color-grey-dark;
+
+        &::after {                      //the after element of the white version should have a background color of white also 
+            background-color: $color-white;
+        }
+    }
+
+    &--green {
+        background-color: $color-primary;
+        color: $color-white;
+
+        &::after {                      //the after element of the white version should have a background color of white also 
+            background-color: $color-primary;
+        }
+    }
+
+    &--animated {       //another version of the btn that gets animated
+        animation: moveInBottom 0.5s ease-out 0.75s;
+        animation-fill-mode: backwards; //CCC: At 0%, opacity is set to 0. But this is not so due to the time-delay set(i.e. during time-delay before the animation starts, the btn is visible which is undesirable). So this property enforces that the styles at 0% is applied even before the animation starts i.e the btn has the opacity 0 while observing the 0.75s time delay.
+    }
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: $default-font-size;
+        color: $color-primary;
+        text-decoration: none;
+        display: inline-block;
+        padding: 0.3rem;
+        border-bottom: 0.1rem solid $color-primary;
+        transition: all 0.2s;
+    }
+
+    &:hover {
+        color: white;
+        background-color: $color-primary;
+        transform: translateY(-2px);  //on hover, the button is positioned 2px above its original position
+        box-shadow: 0rem 0.4rem 1rem rgba($color-black, .2);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0rem .2rem 0.5rem rgba($color-black, .2);   
+    }
+}

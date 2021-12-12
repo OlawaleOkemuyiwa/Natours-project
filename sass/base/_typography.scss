@@ -1,0 +1,76 @@
+.heading-primary {
+    color: $color-white;
+    text-transform: uppercase;
+    backface-visibility: hidden; //to fix the shaky nature of the box whose child elements we animate (hides the backpart of the element)
+    margin-bottom: 6rem;
+
+    &--main {
+        display: block;
+        font-size: 6rem;
+        font-weight: 400;   //INHERITANCE: each and every property on an element must have a value even if it isnt specified by the developer or the browser (i.e no cascaded value). The 1st thing CSS engine asks is if there is a cascaded value. If yes; that value is used. If no; it asks: can that property be inherited?. If yes(e.g text properties); the value of that property is the COMPUTED value of its parent's property. If no (e.g padding is not inheritable); the value of the property becomes the initial value (e.g for padding: 0px). INHERITANCE ONLY COMES INTO PLAY IF NO ONE(NEITHER DEVELOPER OR BROWSER) DECLARES A VALUE FOR THAT PROPERTY 
+        letter-spacing: 3.5rem;
+    
+        animation-name: moveInLeft;
+        animation-duration: 1s; 
+        animation-timing-function: ease-out; //how fast or slow the parameters specified in keyframes would happen over time  
+        
+        @include respond(phone) {
+            letter-spacing: 1.5rem;
+            font-size: 5rem;
+        }
+    }
+    
+    &--sub {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1.75rem;
+        animation: moveInRight 1s ease-out;
+
+        @include respond(phone) {
+            letter-spacing: .5rem;
+            font-weight: 400;
+        }
+    }
+}
+
+.heading-secondary {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+    -webkit-background-clip: text;  //clip the background to the text and clip away the rest of the background. Set the color of the text to transparent to see this change.
+    background-clip: text;
+    color: transparent;
+    letter-spacing: .2rem;
+    transition: all .2s; 
+
+
+    @include respond(tab-port) {
+        font-size: 3rem;
+    }
+
+    @include respond(phone) {
+        font-size: 2.5rem;
+    }
+
+    &:hover {
+        transform: skew(15deg, 2deg) scale(1.1);
+        text-shadow: .5rem 1rem 2rem rgba($color-black, .2);
+    }
+}
+
+.heading-tertiary {
+    font-size: $default-font-size;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.paragraph {
+    font-size: $default-font-size;
+
+    &:not(:last-child) {  //put a bottom margin of 3rem for all paragraphs except a paragraph that is the last child of a parent
+        margin-bottom: 3rem;
+    }
+}

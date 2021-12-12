@@ -1,0 +1,38 @@
+@keyframes moveInLeft { //For browser performance, its best to animate only 2 properties: OPACITY and TRANSFORM
+    0% {
+        opacity: 0;
+        transform: translateX(-10rem); //element translated 100px to the left from its original html position at the beginning of animation
+    }
+    80% {
+        transform: translateX(1rem);  //at 80% of animation completion element is translated 10px to the right from its original html position 
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);      //back to its original position in html
+    }
+}
+
+@keyframes moveInRight { 
+    0% {
+        opacity: 0;
+        transform: translateX(10rem); 
+    }
+    80% {
+        transform: translateX(-1rem);  
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);      
+    }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(3rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,55 @@
+@mixin clearfix {  //Clearfix is used on a containing parent element when it collapses (loses its height) due to the fact that all its elements are now floated
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {  //CCC:when a block element is absolutely positioned, it is pulled out of the normal document flow and now displayed relative to any positioned(i.e position: !static) ancestor. Also it now acts like its displayed inline-block (occupying only content space). 
+    position: absolute;  
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* MEDIA QUERY MANAGER 
+0 - 600px:             Phone
+600px - 900px:         Tablet potrait
+900px - 1200px:        Tablet landscape
+[1200px - 1800px] is where our styles normally apply (Desktop first approach is used)
+1800px +:              Big desktop
+
+Media query adds no importance or specificity to a selector so their order of placement is really important (larger screens declarations up, smaller screens down).
+
+rem and em in media query width are default font-size of browser(16px or whatever set by the user) and nothing else. They do not change when the font-size in the base html is changed (example: we changed from 100%/16px to 62.5%/10px but em/rem is still gonna be 16px for media queries).  
+
+ORDER: base + typography > general layout + grid > page layout > sections > component
+*/
+@mixin respond($breakpoint) {  
+    @if $breakpoint == big-desktop {    //1em = 16px (em is the best option for media query)
+        @media only screen and (min-width: 112.5em) {  //>= 1800px
+            @content
+        };
+    }
+
+    //width: >1200px and <1800px (desktop styles used from the onset to design the website) 
+
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 75em) {    //<= 1200px
+            @content
+        };
+    }
+
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 56.25em) {  //<= 900px
+            @content
+        };
+    }
+
+    @if $breakpoint == phone {       
+        @media only screen and (max-width: 37.5em) {  //<= 600px   
+            @content
+        };
+    }
+}

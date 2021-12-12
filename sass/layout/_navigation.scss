@@ -1,0 +1,177 @@
+.navigation {
+    
+    &__checkbox {
+        display: none;
+        
+        //FUNCTIONALITY (when the label is clicked (which checks the input checkbox through for-->id link up) do these)
+        &:checked ~ .navigation__background {
+            transform: scale(80);
+        }
+
+        &:checked ~ .navigation__nav {
+            opacity: 1;
+            visibility: visible;
+            width: 100%;
+        }
+
+        &:checked + .navigation__button .navigation__icon {
+            background-color: transparent;
+
+            &::before {
+                transform: rotate(135deg);  //opposite movement of rotate(45deg)
+                top: 0;
+            }
+
+            &::after {
+                transform: rotate(-135deg); //opposite movement of rotate(-45deg)
+                bottom: 0;
+            }   
+        }
+    }
+
+    &__button {
+        width: 7rem;
+        height: 7rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6rem;
+        right: 6rem;
+        background-color: $color-white;
+        z-index: 3000;  //highest stacked between the fixed background, nav, btn
+        box-shadow: 0 1rem 3rem rgba($color-black, .1);
+        text-align: center;
+        cursor: pointer;
+
+        @include respond(tab-port) {
+            top: 4rem;
+            right: 4rem;
+        }
+
+        @include respond(phone) {
+            top: 3rem;
+            right: 3rem;
+        }
+    }
+
+    &__background {
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6.5rem;
+        right: 6.5rem;
+        background-image: radial-gradient($color-primary-light, $color-primary-dark); //starts from the middle of an element and goes from there in all the outside directions 
+        z-index: 1000;  //lowest stacked between the fixed background, nav, btn
+        transition: transform .8s cubic-bezier(0.86, 0, 0.07, 1);  //CB is used to generate a custom timing func aside the built in easein, easout etc.
+
+        @include respond(tab-port) {
+            top: 4.5rem;
+            right: 4.5rem;
+        }
+
+        @include respond(phone) {
+            top: 3.5rem;
+            right: 3.5rem;
+        }
+    }
+
+    &__nav {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;               
+        z-index: 2000; //middle stacked between the fixed background, nav, btn
+
+        //CCC:we wish to hide the nav until the btn is clicked(checkbox-input checked). we could use display: none but that cant be animated. 
+        opacity: 0;             //initially make it 100% transparent but still visible by cursor etc
+        visibility: hidden;     //now make it invisible in the web page i.e the links cant be hovered on by a cursor
+        width: 0;               //width 0 doesnt mean the element disappeared on the page, we only just allocated a width of 0 to it so the invisible element fills its invisible content with the smallest space it can. Then when the label is clicked, and the width becomes 100% which gives a fine animation like it slides in from the left (when only the width just increased from 0% to 100%)               
+        transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);     
+    }
+
+    &__list {
+        list-style: none;
+        @include absCenter;
+    }
+
+    &__item {
+        text-align: center;
+        margin-bottom: 1rem;   
+    }
+
+    &__link {
+
+        &:link,
+        &:visited {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 3rem;
+            font-weight: 300;
+            color: $color-white;
+            display: inline-block;
+            padding: 1rem 2rem;     //CCC:In rare cases where we give an inline element some top/bottom padding. This works because the block containing element has some space to spare for this. IT IS POSSIBLE TO SET TOP AND BOTTOM PADDING/MARGIN FOR INLINE-ELEMENTS, THE ONLY THING IS THAT OTHER SURROUNDING ELEMENTS WILL ONLY RESPECT ITS LEFT/RIGHT PADDING/MARGIN AND WHICH LEADS TO THEM GETTING OVERLAPPED
+            background-image: linear-gradient(
+                120deg,
+                transparent 0%,
+                transparent 50%,
+                $color-white 50%
+            );
+            background-size: 220%;  //Default value is auto. The one-value syntax (sets the width of the image (height becomes "auto"), the two-value syntax (first value: width of the image, second value: height)
+            transition: all .4s;
+
+            span {
+                display: inline-block;
+                margin-right: 1.5rem;
+            }
+        }
+
+        &:hover,
+        &:active { 
+            background-position: 100%; //(100% horizontally, 50% vertically --> right center) Default value is 0% 0%(top left). The first value is the horizontal position and the second vertical. If only one value is specified for it, the value would be for the horizontal position and vertical position value will be 50%(center). 
+            color: $color-primary;
+            transform: translateX(1rem);   
+        }
+    }
+
+    //ICON
+    &__icon {
+        position: relative;
+        margin-top: 3.5rem;
+
+        &, 
+        &::before,
+        &::after {
+            width: 3rem;
+            height: 2px;
+            background-color: $color-grey-dark-3;
+            display: inline-block;
+            
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            transition: all .4s;
+        }
+
+        &::before {
+            top: -.8rem;
+        }
+
+        &::after {
+            bottom: -.8rem;
+        }
+    }
+
+    &__button:hover &__icon::before {
+        top: -1rem;
+    }
+
+    &__button:hover &__icon::after {
+        bottom: -1rem;
+    }
+}
+
+//CCC: Z-index represents how elements stack over one another. If no z-index is set, the default value is auto and document order determines how elements are stacked(elements further down the document sit on top of elements that appear before them e.g when we do margin-top: -20px) A Z-index value can only be set for an element not positioned static(except in a flexbox or grid context). A stacking context is created by a parent element with a defined z-index and children(The z-index of the children relative to the children of other parents depends on the z-index value of the parent that created their stacking context)

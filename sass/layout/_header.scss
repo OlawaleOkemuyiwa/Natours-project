@@ -1,0 +1,50 @@
+.header {
+    height: 85vh;
+    background-image: linear-gradient(
+        to right bottom, 
+        rgba($color-primary-light, 0.8), 
+        rgba($color-primary-dark, 0.8) ), 
+    url('../img/hero-small.jpg');       //20% transparent gradient ontop i.e first declared, image under i.e 2nd declared
+    background-size: cover;                         //To fit the whole image to the height and width of the containing element
+    // -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);   //To clip out a path from a containing element by specifying the coordinates of the new polygon that would be be left behind after the clipping takes place; starting from the top left coordinate(x, y) moving clockwise 
+    // clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    position: relative;
+
+
+    //feauture query
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {  //if this property is supported on the browser its been aessed on, do this
+        height: 95vh;
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    }
+
+    @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+           only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+           only screen and (min-width: 125em) { //dots per inch(resolution of the apple retina screen--> high resolution screen). Most phones are 2x res and they dont need to load this large img just cause they have high resolution. 2nd condition of width higher than phone's width is added to solve this
+        background-image: linear-gradient( 
+            to right bottom, 
+            rgba($color-primary-light, 0.8), 
+            rgba($color-primary-dark, 0.8) ), 
+        url('../img/hero.jpg'); //apply large hero image for when resolution >= 2x excluding phones OR for large screens irrespective of its resolution
+    }
+
+    @include respond(phone) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);  
+        clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    }
+
+    &__logo-box {    
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+    }
+    
+    &__logo {
+        height: 3.5rem;               
+    }
+     
+    &__text-box {
+        @include absCenter;
+        text-align: center;
+    }
+}
